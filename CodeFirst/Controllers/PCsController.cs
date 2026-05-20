@@ -15,7 +15,6 @@ public class PCsController : ControllerBase
         _pcService = pcService;
     }
 
-    // GET api/pcs
     [HttpGet]
     [Route("")]
     public async Task<ActionResult<IEnumerable<PCDto>>> GetPCs()
@@ -24,7 +23,6 @@ public class PCsController : ControllerBase
         return Ok(pcs);
     }
 
-    // GET api/pcs/{id}/components
     [HttpGet]
     [Route("{id}/components")]
     public async Task<ActionResult<PCWithComponentsDto>> GetPCComponents(int id)
@@ -39,7 +37,6 @@ public class PCsController : ControllerBase
         return Ok(pc);
     }
 
-    // POST api/pcs
     [HttpPost]
     [Route("")]
     public async Task<ActionResult<PCDto>> CreatePC([FromBody] PCManipulateDto dto)
@@ -51,11 +48,9 @@ public class PCsController : ControllerBase
 
         var createdPc = await _pcService.CreatePCAsync(dto);
 
-        // Zwraca 201 Created wraz z nagłówkiem Location wskazującym na nowy zasób
         return CreatedAtAction(nameof(GetPCs), new { id = createdPc.Id }, createdPc);
     }
 
-    // PUT api/pcs/{id}
     [HttpPut]
     [Route("{id}")]
     public async Task<IActionResult> UpdatePC(int id, [FromBody] PCManipulateDto dto)
@@ -72,10 +67,9 @@ public class PCsController : ControllerBase
             return NotFound();
         }
 
-        return Ok(); // Możesz też zwrócić NoContent()
+        return Ok();
     }
 
-    // DELETE api/pcs/{id}
     [HttpDelete]
     [Route("{id}")]
     public async Task<IActionResult> DeletePC(int id)
